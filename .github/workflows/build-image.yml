@@ -23,7 +23,17 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
 
       - name: Verify source, model manifest, license, and boundary guards
-        run: ./runpod/fg-image-v1/scripts/verify-local.sh
+        run: |
+          docker run --rm \
+            --volume "$PWD:/repo:ro" \
+            --workdir /repo \
+            python:3.12.11-slim-bookworm@sha256:519591d6871b7bc437060736b9f7456b8731f1499a57e22e6c285135ae657bf7 \
+            sh -ec 'python -m pip install --disable-pip-version-check --no-cache-dir --require-hashes --only-binary=:all: --requirement .github/verify-requirements.txt >/dev/null && python runpod/fg-image-v1/scripts/generate-source-manifest.py --check && python -m unittest discover --start-directory runpod/fg-image-v1/tests --verbose'
+          docker run --rm \
+            --volume "$PWD:/repo:ro" \
+            --workdir /repo \
+            node:22.17.0-bookworm-slim@sha256:b04ce4ae4e95b522112c2e5c52f781471a5cbc3b594527bcddedee9bc48c03a0 \
+            node ./scripts/provider-boundary-scan.mjs
 
       - name: Authenticate the repository-scoped publisher
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io --username "${{ github.actor }}" --password-stdin
