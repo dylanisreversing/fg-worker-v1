@@ -64,7 +64,8 @@ jobs:
 
       - name: Verify registry readback
         run: |
-          resolved=$(docker buildx imagetools inspect "${IMAGE}@${{ steps.build.outputs.digest }}" --format '{{.Manifest.Digest}}')
+          resolved="sha256:$(docker buildx imagetools inspect \
+            "${IMAGE}@${{ steps.build.outputs.digest }}" --raw | sha256sum | cut -d' ' -f1)"
           test "$resolved" = "${{ steps.build.outputs.digest }}"
 
       - name: Remove registry session
