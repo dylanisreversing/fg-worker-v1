@@ -1,0 +1,3 @@
+# Supplied by the immutable CUDA base image; intentionally excluded from the
+# Python wheel lock so rebuilding cannot replace the tested CUDA runtime.
+torch==2.7.1

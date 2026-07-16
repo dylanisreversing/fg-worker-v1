@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "worker_name": "fg-worker-v1",
+  "base_image": "pytorch/pytorch:2.7.1-cuda12.8-cudnn9-runtime@sha256:c16f4c749e2d9e96878875cdf6cc45cddda1d1a36fddd371dd6f2360f1b6e2a2",
+  "files": [
+    {
+      "path": "Dockerfile",
+      "size": 2634,
+      "sha256": "c42a80c6341fa09a8c343883879f251eb7cd5230a2caaeebbc4e3c0de3972e93"
+    },
+    {
+      "path": "base-constraints.txt",
+      "size": 164,
+      "sha256": "ea086db4ce7bd9b8aeb2694b378ae969ed78858580553155ac3f3495121a99de"
+    },
+    {
+      "path": "download_model.py",
+      "size": 4101,
+      "sha256": "e36afbcc23bc1d38d026c61c8c6cd8e347c0d65b34e77a74f2f570de59b6771a"
+    },
+    {
+      "path": "entrypoint.sh",
+      "size": 105,
+      "sha256": "8a570ea0f05d854205811c7665c0dadcdf8a64b2c55e2d44132e142260cdc18f"
+    },
+    {
+      "path": "handler.py",
+      "size": 752,
+      "sha256": "04acb41f5ee2c4b76a26da49b7e5ba1e855d871033907280d8e6f0cf765a42e5"
+    },
+    {
+      "path": "licenses/Tongyi-MAI-Z-Image/LICENSE",
+      "size": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "licenses/Tongyi-MAI-Z-Image/NOTICE",
+      "size": 709,
+      "sha256": "7fe246023d6c55c87c1f3a813d0ab350859d8f55d9dc28486a30c5b115294052"
+    },
+    {
+      "path": "model-manifest.json",
+      "size": 5210,
+      "sha256": "2f464e78877760b887c1bdef3a2c8386920c6d37903cdaf198c2cd4284a27a92"
+    },
+    {
+      "path": "requirements.lock",
+      "size": 236670,
+      "sha256": "a11e69720df50dd3104f37483469aead8cc277aa1889db5e5397b69ad0800753"
+    },
+    {
+      "path": "requirements.txt",
+      "size": 152,
+      "sha256": "4697af04fa0adea63a12185dce4900852ad140c32e50314f44ddbdce8d47b4be"
+    },
+    {
+      "path": "scripts/generate-source-manifest.py",
+      "size": 2267,
+      "sha256": "63460a8c3a8f36e981f369c17d45e2e33ff919b1c3af601a2931f0e41b3999d7"
+    },
+    {
+      "path": "scripts/lock-requirements.sh",
+      "size": 1511,
+      "sha256": "fff44fd20796431bca387676e6e4bab6044f11b5392b74cdf76f88813a60685c"
+    },
+    {
+      "path": "src/fg_worker/__init__.py",
+      "size": 647,
+      "sha256": "f426cf7e35c99d2849915a9431bf198bf4f3f38f7b7dd2798ff4ebd22dea4ab9"
+    },
+    {
+      "path": "src/fg_worker/bootstrap.py",
+      "size": 7054,
+      "sha256": "536651c71239e27d4b12b7928db79bef201c19ac6109bf12409d969865c10a6f"
+    },
+    {
+      "path": "src/fg_worker/contract.py",
+      "size": 3667,
+      "sha256": "6e219dea7d3f29659ebc1f5d5329d7c675afd6cb853d6aaa1b664a1ab1fdb430"
+    },
+    {
+      "path": "src/fg_worker/provenance.py",
+      "size": 2890,
+      "sha256": "e03616cdc0f167084d70123cabd70edb84efd6e708db0b9b2aa68f2b63c6ba85"
+    },
+    {
+      "path": "src/fg_worker/runtime.py",
+      "size": 2685,
+      "sha256": "901cef9c16adda0e1c54d69e27ade62c14f26f0f7c6a0bee4643abef958d7fbf"
+    },
+    {
+      "path": "src/fg_worker/service.py",
+      "size": 3794,
+      "sha256": "974ffbfef6f9e369e13cea8497f381a8f426d4ceed4e8e9ca4a637450ee14056"
+    },
+    {
+      "path": "src/fg_worker/telemetry.py",
+      "size": 1311,
+      "sha256": "1a5722769674a75c1a953eb7088ed1b5b71cbb47481a1d20e21e0165058bff28"
+    },
+    {
+      "path": "workflow-manifest.json",
+      "size": 1195,
+      "sha256": "5e145012ace3367db33fe34706894e12a495c3580b303052820693445edc215e"
+    }
+  ]
+}

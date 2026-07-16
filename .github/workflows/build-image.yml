@@ -1,0 +1,62 @@
+name: Build immutable image
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: fg-worker-v1-image
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: [self-hosted, linux, x64, fg-builder-v1]
+    timeout-minutes: 300
+    env:
+      IMAGE: ghcr.io/dylanisreversing/fg-worker-v1
+      SOURCE_ID: 5e767a5762d2ed18a00bbcd4e7d11507e1d6d83c66d00874f2f828c8388e429e
+    steps:
+      - name: Check out exact source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - name: Verify source, model manifest, license, and boundary guards
+        run: ./runpod/fg-image-v1/scripts/verify-local.sh
+
+      - name: Authenticate the repository-scoped publisher
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io --username "${{ github.actor }}" --password-stdin
+
+      - name: Create isolated BuildKit builder
+        run: |
+          docker buildx create --name fg-builder --driver docker-container --use
+          docker buildx inspect --bootstrap
+
+      - name: Build and push immutable image
+        id: build
+        run: |
+          docker buildx build \
+            --platform linux/amd64 \
+            --label "org.opencontainers.image.source=https://github.com/${{ github.repository }}" \
+            --label "org.opencontainers.image.revision=${{ github.sha }}" \
+            --tag "${IMAGE}:v1.0.0" \
+            --tag "${IMAGE}:build-${SOURCE_ID}" \
+            --metadata-file /tmp/fg-worker-build.json \
+            --provenance=mode=max \
+            --sbom=true \
+            --push \
+            ./runpod/fg-image-v1
+          digest=$(jq -r '."containerimage.digest"' /tmp/fg-worker-build.json)
+          case "$digest" in sha256:????????????????????????????????????????????????????????????????) ;; *) exit 64 ;; esac
+          echo "digest=$digest" >> "$GITHUB_OUTPUT"
+          echo "Published immutable digest: $digest" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Verify registry readback
+        run: |
+          resolved=$(docker buildx imagetools inspect "${IMAGE}@${{ steps.build.outputs.digest }}" --format '{{.Manifest.Digest}}')
+          test "$resolved" = "${{ steps.build.outputs.digest }}"
+
+      - name: Remove registry session
+        if: always()
+        run: docker logout ghcr.io || true

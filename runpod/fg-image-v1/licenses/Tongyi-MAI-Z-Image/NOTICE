@@ -1,0 +1,17 @@
+Z-Image model snapshot notice
+
+This container distribution includes model artifacts from:
+
+  Project: Tongyi-MAI/Z-Image
+  Model source: https://huggingface.co/Tongyi-MAI/Z-Image
+  Project source: https://github.com/Tongyi-MAI/Z-Image
+  Pinned model revision: 04cc4abb7c5069926f75c9bfde9ef43d49423021
+  License: Apache License, Version 2.0
+
+The verbatim project LICENSE is packaged beside this notice. Its SHA-256 is:
+
+  c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4
+
+The pinned Hugging Face model snapshot did not contain a separate upstream
+NOTICE file. This distribution notice records model identity, source,
+revision, and license availability; it does not add or modify license terms.

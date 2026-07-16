@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "workflow_id": "fg_image_v1",
+  "workflow_version": "fg_image_v1.0.0",
+  "settings_profile": "z_image_base_v1",
+  "worker_name": "fg-worker-v1",
+  "model": {
+    "repo_id": "Tongyi-MAI/Z-Image",
+    "revision": "04cc4abb7c5069926f75c9bfde9ef43d49423021",
+    "manifest_sha256": "2f464e78877760b887c1bdef3a2c8386920c6d37903cdaf198c2cd4284a27a92"
+  },
+  "request": {
+    "required_fields": [
+      "workflow_id",
+      "workflow_version",
+      "settings_profile",
+      "prompt",
+      "seed",
+      "width",
+      "height"
+    ],
+    "optional_fields": [
+      "negative_prompt"
+    ],
+    "allowed_dimensions": [
+      [1024, 1536],
+      [1536, 1024]
+    ],
+    "max_prompt_chars": 4096,
+    "max_negative_prompt_chars": 4096,
+    "max_seed": 4294967295
+  },
+  "inference": {
+    "dtype": "bfloat16",
+    "sampler": "flow_match_euler",
+    "scheduler": "shift_6",
+    "steps": 40,
+    "cfg": 4.0,
+    "cfg_normalization": false
+  },
+  "output": {
+    "keys": [
+      "image",
+      "model_metadata"
+    ],
+    "image_keys": [
+      "base64",
+      "media_type"
+    ],
+    "media_type": "image/webp",
+    "max_raw_bytes": 7340032,
+    "metadata_stripped": true
+  }
+}
