@@ -41,7 +41,11 @@ jobs:
 
       - name: Create isolated BuildKit builder
         run: |
-          docker buildx create --name fg-builder --driver docker-container --use
+          if docker buildx inspect fg-builder >/dev/null 2>&1; then
+            docker buildx use fg-builder
+          else
+            docker buildx create --name fg-builder --driver docker-container --use
+          fi
           docker buildx inspect --bootstrap
 
       - name: Build and push immutable image
