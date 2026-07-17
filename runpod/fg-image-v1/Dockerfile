@@ -1,7 +1,7 @@
 FROM pytorch/pytorch:2.7.1-cuda12.8-cudnn9-runtime@sha256:c16f4c749e2d9e96878875cdf6cc45cddda1d1a36fddd371dd6f2360f1b6e2a2
 
 LABEL org.opencontainers.image.title="fg-worker-v1" \
-      org.opencontainers.image.version="1.0.0" \
+      org.opencontainers.image.version="1.0.1" \
       org.opencontainers.image.description="Pinned prompt-to-image inference worker"
 
 ENV PYTHONUNBUFFERED=1 \
@@ -57,6 +57,7 @@ RUN python -m fg_worker.bootstrap \
 
 RUN groupadd --gid 10001 worker \
     && useradd --create-home --uid 10001 --gid 10001 worker \
+    && install -d --owner=10001 --group=10001 --mode=0700 /tmp/fg-worker-runtime \
     && chown -R root:root /opt/fg-worker /opt/fg-model \
     && chmod -R a-w /opt/fg-worker /opt/fg-model \
     && chmod 0555 /opt/fg-worker/entrypoint.sh
@@ -64,6 +65,8 @@ RUN groupadd --gid 10001 worker \
 ENV HF_HUB_OFFLINE=1 \
     TRANSFORMERS_OFFLINE=1 \
     DIFFUSERS_OFFLINE=1
+
+WORKDIR /tmp/fg-worker-runtime
 
 USER 10001:10001
 

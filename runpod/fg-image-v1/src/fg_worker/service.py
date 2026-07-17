@@ -64,7 +64,15 @@ def handle_job(job: Any, runtime: Any) -> dict[str, Any]:
     emit("request_received", request_ref=request_ref)
 
     try:
-        if not isinstance(job, Mapping) or set(job.keys()) - {"id", "input"}:
+        # RunPod owns the outer job envelope and may add platform metadata to
+        # the documented id/input pair. Only `input` is caller-controlled by
+        # our adapter, so keep that object exact while ignoring unused
+        # platform envelope fields.
+        if (
+            not isinstance(job, Mapping)
+            or not isinstance(job.get("id"), str)
+            or not job.get("id")
+        ):
             raise ContractError("invalid_job")
         request = parse_generation_request(job.get("input"))
         build_id = worker_build_id()

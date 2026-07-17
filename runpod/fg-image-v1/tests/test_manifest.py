@@ -62,6 +62,15 @@ class ManifestTests(unittest.TestCase):
             dockerfile,
         )
         self.assertNotIn("ARG BASE", dockerfile)
+        self.assertIn(
+            "install -d --owner=10001 --group=10001 --mode=0700 /tmp/fg-worker-runtime",
+            dockerfile,
+        )
+        self.assertIn("WORKDIR /tmp/fg-worker-runtime", dockerfile)
+        self.assertLess(
+            dockerfile.index("WORKDIR /tmp/fg-worker-runtime"),
+            dockerfile.index("USER 10001:10001"),
+        )
 
     def test_model_download_layers_are_bounded_complete_and_exactly_once(self) -> None:
         manifest = json.loads((WORKER_DIR / "model-manifest.json").read_text(encoding="utf-8"))

@@ -107,10 +107,25 @@ class ServiceTests(unittest.TestCase):
         self.assertNotIn("private upstream detail", logs.getvalue())
         self.assertNotIn("SENSITIVE_PROMPT", logs.getvalue())
 
-    def test_rejects_outer_job_fields_and_wrong_sized_results(self) -> None:
+    def test_accepts_platform_envelope_fields_but_rejects_invalid_jobs(self) -> None:
         with contextlib.redirect_stdout(io.StringIO()):
+            output = handle_job(
+                job()
+                | {
+                    "webhook": None,
+                    "policy": {"executionTimeout": 600000},
+                    "platform_trace": "unused-platform-metadata",
+                },
+                FakeRuntime(),
+            )
+            self.assertEqual(output["image"]["media_type"], "image/webp")
             with self.assertRaises(WorkerFailure):
-                handle_job(job() | {"webhook": "https://example.invalid"}, FakeRuntime())
+                handle_job({"input": job()["input"]}, FakeRuntime())
+            with self.assertRaises(WorkerFailure):
+                handle_job({"id": 42, "input": job()["input"]}, FakeRuntime())
+
+    def test_rejects_wrong_sized_results(self) -> None:
+        with contextlib.redirect_stdout(io.StringIO()):
             with self.assertRaises(WorkerFailure):
                 handle_job(job(), FakeRuntime(wrong_size=True))
 

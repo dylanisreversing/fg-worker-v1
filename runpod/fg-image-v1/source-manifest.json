@@ -5,8 +5,8 @@
   "files": [
     {
       "path": "Dockerfile",
-      "size": 2634,
-      "sha256": "c42a80c6341fa09a8c343883879f251eb7cd5230a2caaeebbc4e3c0de3972e93"
+      "size": 2749,
+      "sha256": "ea2c56de8941301b95d2e7af824246b55a7c3ef09ef462c9f722da30bb39f967"
     },
     {
       "path": "base-constraints.txt",
@@ -90,8 +90,8 @@
     },
     {
       "path": "src/fg_worker/service.py",
-      "size": 3794,
-      "sha256": "974ffbfef6f9e369e13cea8497f381a8f426d4ceed4e8e9ca4a637450ee14056"
+      "size": 4126,
+      "sha256": "4ed6fbe4842bbf435e804a2c31a9c2934595ed152acf5978b93f40a6945c3334"
     },
     {
       "path": "src/fg_worker/telemetry.py",
