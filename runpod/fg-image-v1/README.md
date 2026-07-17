@@ -152,7 +152,8 @@ credentials or storage owned by another service. The result is inline, so the
 provider worker needs no object-storage credential and cannot create a public
 object URL.
 
-Rollback means changing the isolated template to the last recorded, verified
-OCI digest and then restoring the endpoint to that template. Never rebuild an
-old mutable tag. Keep the previous digest and its matching model manifest in
-the operator record, and stop new submissions while a rollback is in progress.
+There is no safe predecessor image yet. The prior live digest `80b40f…` has
+known job-envelope and runtime-path defects and must never be restored. Until a
+future predecessor independently passes the durable canary, rollback means
+stopping submissions and execution while investigating. Never rebuild or trust
+an old mutable tag.
