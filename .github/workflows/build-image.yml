@@ -17,7 +17,7 @@ jobs:
     timeout-minutes: 300
     env:
       IMAGE: ghcr.io/dylanisreversing/fg-worker-v1
-      SOURCE_ID: 20a02903ea033edd90e2d764f7ac97477dfce06dfe0be8066ac6b0adf14c51d7
+      SOURCE_ID: 82db57029436a8652c8e80650a0a0fdf85338020501529267529ac499cc3237e
     steps:
       - name: Check out exact source
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
