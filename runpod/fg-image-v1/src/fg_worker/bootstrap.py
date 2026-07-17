@@ -15,6 +15,7 @@ from . import (
     MODEL_REVISION,
     SETTINGS_PROFILE,
     WORKER_ID,
+    WORKER_VERSION,
     WORKFLOW_ID,
     WORKFLOW_SHA256,
     WORKFLOW_VERSION,
@@ -60,9 +61,13 @@ def _manifest_digest(path: Path) -> str:
 
 def verify_model_manifest_identity(path: Path) -> None:
     manifest = load_manifest(path)
+    worker = manifest.get("worker")
     model = manifest.get("model")
     if (
         _manifest_digest(path) != MODEL_MANIFEST_SHA256
+        or not isinstance(worker, dict)
+        or worker.get("id") != WORKER_ID
+        or worker.get("version") != WORKER_VERSION
         or not isinstance(model, dict)
         or model.get("repo_id") != MODEL_REPO_ID
         or model.get("revision") != MODEL_REVISION

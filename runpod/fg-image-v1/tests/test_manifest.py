@@ -16,7 +16,12 @@ sys.path.insert(0, str(WORKER_DIR))
 sys.path.insert(0, str(WORKER_DIR / "src"))
 
 from download_model import ManifestError, download_layer_paths  # noqa: E402
-from fg_worker import MODEL_MANIFEST_SHA256, WORKER_VERSION, WORKFLOW_SHA256  # noqa: E402
+from fg_worker import (  # noqa: E402
+    MODEL_MANIFEST_SHA256,
+    WORKER_ID,
+    WORKER_VERSION,
+    WORKFLOW_SHA256,
+)
 from fg_worker.bootstrap import (  # noqa: E402
     VerificationError,
     verify_model_manifest_identity,
@@ -48,6 +53,8 @@ class ManifestTests(unittest.TestCase):
 
     def test_model_and_runtime_are_immutably_pinned(self) -> None:
         manifest = json.loads((WORKER_DIR / "model-manifest.json").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["worker"]["id"], WORKER_ID)
+        self.assertEqual(manifest["worker"]["version"], WORKER_VERSION)
         self.assertEqual(manifest["model"]["repo_id"], "Tongyi-MAI/Z-Image")
         self.assertEqual(
             manifest["model"]["revision"],

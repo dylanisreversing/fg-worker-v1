@@ -41,7 +41,7 @@
     {
       "path": "model-manifest.json",
       "size": 5210,
-      "sha256": "2f464e78877760b887c1bdef3a2c8386920c6d37903cdaf198c2cd4284a27a92"
+      "sha256": "1308e63d14f7c607e032b84f8fe3ecffff94797b5b4c4a13484e8922fca61adb"
     },
     {
       "path": "requirements.lock",
@@ -66,12 +66,12 @@
     {
       "path": "src/fg_worker/__init__.py",
       "size": 647,
-      "sha256": "3e1b9e491dbb6f3cd06f94efd0a2533b434b68ef265240ed875a3bd10a27f385"
+      "sha256": "3f3dfe06bac746bd7a152aaccd53bde214a69876a011e4e4d0ec69c5e1a27ccc"
     },
     {
       "path": "src/fg_worker/bootstrap.py",
-      "size": 7054,
-      "sha256": "536651c71239e27d4b12b7928db79bef201c19ac6109bf12409d969865c10a6f"
+      "size": 7242,
+      "sha256": "88a95b4513d9d3d85efbc57c616733dfaf0aa2102c8a0f59168456f26fdf86a2"
     },
     {
       "path": "src/fg_worker/contract.py",
@@ -101,7 +101,7 @@
     {
       "path": "workflow-manifest.json",
       "size": 1195,
-      "sha256": "5e145012ace3367db33fe34706894e12a495c3580b303052820693445edc215e"
+      "sha256": "9ac558d9616edbd6794cf0fd3399923d5c94669f870ea3f92f7609a35886a41f"
     }
   ]
 }

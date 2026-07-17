@@ -35,14 +35,14 @@ making runtime drift fail bootstrap and local verification.
 The adapter provenance values for this source revision are:
 
 - worker build:
-  `fg-worker-v1@sha256:20a02903ea033edd90e2d764f7ac97477dfce06dfe0be8066ac6b0adf14c51d7`
+  `fg-worker-v1@sha256:82db57029436a8652c8e80650a0a0fdf85338020501529267529ac499cc3237e`
 - source-manifest SHA-256:
-  `20a02903ea033edd90e2d764f7ac97477dfce06dfe0be8066ac6b0adf14c51d7`
+  `82db57029436a8652c8e80650a0a0fdf85338020501529267529ac499cc3237e`
 - workflow SHA-256:
-  `5e145012ace3367db33fe34706894e12a495c3580b303052820693445edc215e`
+  `9ac558d9616edbd6794cf0fd3399923d5c94669f870ea3f92f7609a35886a41f`
 - model revision: `04cc4abb7c5069926f75c9bfde9ef43d49423021`
 - model-manifest SHA-256:
-  `2f464e78877760b887c1bdef3a2c8386920c6d37903cdaf198c2cd4284a27a92`
+  `1308e63d14f7c607e032b84f8fe3ecffff94797b5b4c4a13484e8922fca61adb`
 Container startup checks the stamp, every file size, CUDA, and the exact
 pipeline import before the worker is marked ready. A full checksum recheck is
 available with:

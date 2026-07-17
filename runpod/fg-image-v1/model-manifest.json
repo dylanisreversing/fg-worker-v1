@@ -2,7 +2,7 @@
   "schema_version": 1,
   "worker": {
     "id": "fg-worker-v1",
-    "version": "1.0.0"
+    "version": "1.0.1"
   },
   "model": {
     "repo_id": "Tongyi-MAI/Z-Image",
