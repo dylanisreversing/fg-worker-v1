@@ -35,9 +35,9 @@ making runtime drift fail bootstrap and local verification.
 The adapter provenance values for this source revision are:
 
 - worker build:
-  `fg-worker-v1@sha256:08456eefbd33612d6cb4967569d7bdf9e0757f889da70eedc65f4bab437aed02`
+  `fg-worker-v1@sha256:5191183f488b83f2e64441ebd055b0643e2d7b329029c6b761cb1cd4c0098b8a`
 - source-manifest SHA-256:
-  `08456eefbd33612d6cb4967569d7bdf9e0757f889da70eedc65f4bab437aed02`
+  `5191183f488b83f2e64441ebd055b0643e2d7b329029c6b761cb1cd4c0098b8a`
 - workflow SHA-256:
   `5e145012ace3367db33fe34706894e12a495c3580b303052820693445edc215e`
 - model revision: `04cc4abb7c5069926f75c9bfde9ef43d49423021`

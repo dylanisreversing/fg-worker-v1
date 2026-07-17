@@ -37,10 +37,11 @@ SOURCE_FILES = (
     "src/fg_worker/telemetry.py",
     "workflow-manifest.json",
 )
+COPIED_TREE_ROOTS = ("licenses", "src")
 
 
-def _record(relative: str) -> dict[str, object]:
-    target = WORKER_ROOT / relative
+def _record(root: Path, relative: str) -> dict[str, object]:
+    target = root / relative
     raw = target.read_bytes()
     return {
         "path": relative,
@@ -49,12 +50,31 @@ def _record(relative: str) -> dict[str, object]:
     }
 
 
-def rendered_manifest() -> bytes:
+def assert_exact_copied_tree(root: Path = WORKER_ROOT) -> None:
+    expected = {
+        relative
+        for relative in SOURCE_FILES
+        if Path(relative).parts[0] in COPIED_TREE_ROOTS
+    }
+    actual: set[str] = set()
+    for directory_name in COPIED_TREE_ROOTS:
+        directory = root / directory_name
+        for target in directory.rglob("*"):
+            if target.is_symlink():
+                raise ValueError("copied runtime trees may not contain symlinks")
+            if target.is_file():
+                actual.add(target.relative_to(root).as_posix())
+    if actual != expected:
+        raise ValueError("copied runtime tree does not match the source manifest allowlist")
+
+
+def rendered_manifest(root: Path = WORKER_ROOT) -> bytes:
+    assert_exact_copied_tree(root)
     manifest = {
         "schema_version": 1,
         "worker_name": "fg-worker-v1",
         "base_image": BASE_IMAGE,
-        "files": [_record(relative) for relative in sorted(SOURCE_FILES)],
+        "files": [_record(root, relative) for relative in sorted(SOURCE_FILES)],
     }
     return (json.dumps(manifest, indent=2) + "\n").encode("utf-8")
 

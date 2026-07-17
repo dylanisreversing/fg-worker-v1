@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import hashlib
+import importlib.util
 import json
 import re
+import shutil
 import sys
 import tempfile
 import unittest
@@ -21,8 +23,29 @@ from fg_worker.bootstrap import (  # noqa: E402
     verify_workflow_manifest,
 )
 
+SOURCE_GENERATOR_SPEC = importlib.util.spec_from_file_location(
+    "fg_source_manifest_generator",
+    WORKER_DIR / "scripts" / "generate-source-manifest.py",
+)
+assert SOURCE_GENERATOR_SPEC is not None and SOURCE_GENERATOR_SPEC.loader is not None
+SOURCE_GENERATOR = importlib.util.module_from_spec(SOURCE_GENERATOR_SPEC)
+SOURCE_GENERATOR_SPEC.loader.exec_module(SOURCE_GENERATOR)
+
 
 class ManifestTests(unittest.TestCase):
+    def test_source_generator_rejects_unlisted_copied_runtime_files(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            shutil.copytree(WORKER_DIR / "src", root / "src")
+            shutil.copytree(WORKER_DIR / "licenses", root / "licenses")
+            SOURCE_GENERATOR.assert_exact_copied_tree(root)
+            (root / "src" / "sitecustomize.py").write_text(
+                "raise RuntimeError('must never load')\n",
+                encoding="utf-8",
+            )
+            with self.assertRaises(ValueError):
+                SOURCE_GENERATOR.assert_exact_copied_tree(root)
+
     def test_model_and_runtime_are_immutably_pinned(self) -> None:
         manifest = json.loads((WORKER_DIR / "model-manifest.json").read_text(encoding="utf-8"))
         self.assertEqual(manifest["model"]["repo_id"], "Tongyi-MAI/Z-Image")

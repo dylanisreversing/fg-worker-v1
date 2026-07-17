@@ -13,6 +13,7 @@ from . import BASE_IMAGE, WORKER_ID
 
 WORKER_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_SOURCE_MANIFEST = WORKER_ROOT / "source-manifest.json"
+COPIED_TREE_ROOTS = frozenset({"licenses", "src"})
 
 
 class SourceVerificationError(RuntimeError):
@@ -75,6 +76,22 @@ def verify_source_manifest(manifest_path: Path, root: Path) -> str:
                 raise SourceVerificationError("Worker source integrity mismatch.")
         except OSError:
             raise SourceVerificationError("Worker source is unavailable.") from None
+
+    expected_copied_files = {
+        relative
+        for relative in seen
+        if Path(relative).parts[0] in COPIED_TREE_ROOTS
+    }
+    actual_copied_files: set[str] = set()
+    for directory_name in COPIED_TREE_ROOTS:
+        directory = resolved_root / directory_name
+        for target in directory.rglob("*"):
+            if target.is_symlink():
+                raise SourceVerificationError("Worker source is invalid.")
+            if target.is_file():
+                actual_copied_files.add(target.relative_to(resolved_root).as_posix())
+    if actual_copied_files != expected_copied_files:
+        raise SourceVerificationError("Worker source coverage mismatch.")
 
     source_digest = hashlib.sha256(raw).hexdigest()
     return f"{WORKER_ID}@sha256:{source_digest}"

@@ -6,7 +6,7 @@ versioned request contract in `runpod/fg-image-v1`.
 
 The source identity for this release is:
 
-`fg-worker-v1@sha256:08456eefbd33612d6cb4967569d7bdf9e0757f889da70eedc65f4bab437aed02`
+`fg-worker-v1@sha256:5191183f488b83f2e64441ebd055b0643e2d7b329029c6b761cb1cd4c0098b8a`
 
 The container is built by a one-job ephemeral self-hosted runner because the
 pinned model artifact is larger than a standard hosted runner's disk. Every

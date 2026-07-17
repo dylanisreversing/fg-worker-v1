@@ -42,6 +42,20 @@ class BootstrapTests(unittest.TestCase):
             with self.assertRaises(SourceVerificationError):
                 verify_source_manifest(copied_manifest, root)
 
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            copied_manifest = root / "source-manifest.json"
+            copied_manifest.write_bytes(source_manifest.read_bytes())
+            for record in manifest["files"]:
+                source = WORKER_DIR / record["path"]
+                target = root / record["path"]
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(source, target)
+            extra_source = root / "src" / "sitecustomize.py"
+            extra_source.write_text("raise RuntimeError('must never load')\n", encoding="utf-8")
+            with self.assertRaises(SourceVerificationError):
+                verify_source_manifest(copied_manifest, root)
+
     def _fixture(self, directory: Path) -> tuple[Path, Path]:
         model_dir = directory / "model"
         model_dir.mkdir()

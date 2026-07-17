@@ -55,8 +55,8 @@
     },
     {
       "path": "scripts/generate-source-manifest.py",
-      "size": 2267,
-      "sha256": "63460a8c3a8f36e981f369c17d45e2e33ff919b1c3af601a2931f0e41b3999d7"
+      "size": 3071,
+      "sha256": "8ddb945ac5f38b104a9ca4f846e1083018056820d1b9bd6f7a47728717dff6cc"
     },
     {
       "path": "scripts/lock-requirements.sh",
@@ -80,8 +80,8 @@
     },
     {
       "path": "src/fg_worker/provenance.py",
-      "size": 2890,
-      "sha256": "e03616cdc0f167084d70123cabd70edb84efd6e708db0b9b2aa68f2b63c6ba85"
+      "size": 3619,
+      "sha256": "2010c56fcf30ce88af322d917d2c8172f42ba9741f1e79eb417ceea31d4370c2"
     },
     {
       "path": "src/fg_worker/runtime.py",
