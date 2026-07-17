@@ -16,7 +16,7 @@ sys.path.insert(0, str(WORKER_DIR))
 sys.path.insert(0, str(WORKER_DIR / "src"))
 
 from download_model import ManifestError, download_layer_paths  # noqa: E402
-from fg_worker import MODEL_MANIFEST_SHA256, WORKFLOW_SHA256  # noqa: E402
+from fg_worker import MODEL_MANIFEST_SHA256, WORKER_VERSION, WORKFLOW_SHA256  # noqa: E402
 from fg_worker.bootstrap import (  # noqa: E402
     VerificationError,
     verify_model_manifest_identity,
@@ -79,6 +79,14 @@ class ManifestTests(unittest.TestCase):
         self.assertTrue(all(re.fullmatch(r"[0-9a-f]{64}", record["sha256"]) for record in files))
 
         dockerfile = (WORKER_DIR / "Dockerfile").read_text(encoding="utf-8")
+        self.assertIn(
+            f'org.opencontainers.image.version="{WORKER_VERSION}"',
+            dockerfile,
+        )
+        self.assertIn(
+            f"fg-worker-v1:{WORKER_VERSION}",
+            (WORKER_DIR / "scripts" / "build-local.sh").read_text(encoding="utf-8"),
+        )
         self.assertIn(
             "pytorch/pytorch:2.7.1-cuda12.8-cudnn9-runtime@sha256:"
             "c16f4c749e2d9e96878875cdf6cc45cddda1d1a36fddd371dd6f2360f1b6e2a2",

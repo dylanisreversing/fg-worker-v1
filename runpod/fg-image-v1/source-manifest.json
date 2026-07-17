@@ -66,7 +66,7 @@
     {
       "path": "src/fg_worker/__init__.py",
       "size": 647,
-      "sha256": "f426cf7e35c99d2849915a9431bf198bf4f3f38f7b7dd2798ff4ebd22dea4ab9"
+      "sha256": "3e1b9e491dbb6f3cd06f94efd0a2533b434b68ef265240ed875a3bd10a27f385"
     },
     {
       "path": "src/fg_worker/bootstrap.py",

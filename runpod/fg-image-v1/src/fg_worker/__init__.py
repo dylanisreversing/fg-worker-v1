@@ -1,7 +1,7 @@
 """Fixed-contract image worker."""
 
 WORKER_ID = "fg-worker-v1"
-WORKER_VERSION = "1.0.0"
+WORKER_VERSION = "1.0.1"
 BASE_IMAGE = (
     "pytorch/pytorch:2.7.1-cuda12.8-cudnn9-runtime@sha256:"
     "c16f4c749e2d9e96878875cdf6cc45cddda1d1a36fddd371dd6f2360f1b6e2a2"
