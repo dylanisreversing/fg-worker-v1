@@ -24,6 +24,7 @@ jobs:
 
       - name: Verify source, model manifest, license, and boundary guards
         run: |
+          test "$(sha256sum runpod/fg-image-v1/source-manifest.json | cut -d' ' -f1)" = "$SOURCE_ID"
           docker run --rm \
             --volume "$PWD:/repo:ro" \
             --workdir /repo \
